@@ -41,6 +41,7 @@ if api_key:
     st.sidebar.header('EduMentor')
 
     if st.sidebar.button('Generate Chat History'):
+        html_data = generate_html(st.session_state.messages)
         st.sidebar.download_button(label="Download Chat History as HTML",
                                         data=html_data,
                                         file_name="chat_history.html",
