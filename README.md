@@ -7,6 +7,7 @@ EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (R
 **Mechanism of EduMentor:**
 - **OpenAI Assistant API**: EduMentor leverages this robust API for its core AI functionalities. The API enables the AI to interpret complex code, retrieve relevant information efficiently, and perform specific functions, thereby enriching the learning experience. More about the Assistant API can be found [here](https://platform.openai.com/docs/guides/assistants).
 - **Retrieval-Augmented Generation (RAG)**: This framework enhances the AI's responses by grounding them in external, up-to-date sources. It combines retrieval models with generative models, ensuring contextually accurate and information-rich responses. Learn more about RAG [here](https://www.datastax.com/blog/2020/10/introducing-retrieval-augmented-generation-rag).
+![RAG](https://python.langchain.com/assets/images/qa_flow-9fbd91de9282eb806bda1c6db501ecec.jpeg)
 - **Vector Database Similarity Search**: EduMentor utilizes vector similarity search for efficient information retrieval from large databases. This technique transforms data into numerical vectors, enabling fast and accurate content retrieval relevant to the user's queries. More information on vector similarity search is available [here](https://www.infoworld.com/article/3634357/what-is-vector-search-better-search-through-ai.html).
 
 **Data Privacy and Safety:**
