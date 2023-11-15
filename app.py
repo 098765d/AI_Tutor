@@ -8,12 +8,8 @@ from chat_gen import generate_html
 import io
 from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
 import subprocess
+import os
 
-# Check if wkhtmltopdf is installed and its location
-wkhtmltopdf_path = subprocess.getoutput('which wkhtmltopdf')
-wkhtmltopdf_version = subprocess.getoutput('wkhtmltopdf --version')
-st.write("wkhtmltopdf path:", wkhtmltopdf_path)
-st.write("wkhtmltopdf version:", wkhtmltopdf_version)
 
 
 # Title and Description
@@ -48,8 +44,12 @@ if api_key:
 
     if st.sidebar.button('Generate Chat History'):
         # Set path to wkhtmltopdf
-        path_wkhtmltopdf = '/usr/bin/wkhtmltopdf'
-        config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+        # Path to wkhtmltopdf binary
+        wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
+        if not os.path.isfile(wkhtmltopdf_path):
+            raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
+        # Configure pdfkit to use the binary
+        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
         
         # Use the config when converting
         pdf = pdfkit.from_string(html_data, False, configuration=config)
