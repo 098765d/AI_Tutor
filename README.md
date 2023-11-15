@@ -1,6 +1,6 @@
 # AI-Tutor: LLM and RAG-Enhanced AI Tutoring Across a Spectrum of Academic Courses
 
-https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/
+**Web App**: https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/
 
 **Description:**
 EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to deliver a cutting-edge educational platform. Integrating these technologies facilitates a dynamic and responsive learning experience, tailored to individual educational needs.
