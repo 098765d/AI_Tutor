@@ -1,5 +1,5 @@
 
-# EduMentor: AI-Driven Tutoring with Advanced Technology and Data Privacy
+# EduMentor: LLM and RAG-Enhanced AI Tutoring Across a Spectrum of Academic Courses
 
 **Description:**
 EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to deliver a cutting-edge educational platform. Integrating these technologies facilitates a dynamic and responsive learning experience, tailored to individual educational needs.
