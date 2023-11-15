@@ -9,8 +9,11 @@ import io
 from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
 import subprocess
 
-path_wkhtmltopdf = subprocess.getoutput('which wkhtmltopdf')
-st.write("wkhtmltopdf installed at:", path_wkhtmltopdf)
+# Check if wkhtmltopdf is installed and its location
+wkhtmltopdf_path = subprocess.getoutput('which wkhtmltopdf')
+wkhtmltopdf_version = subprocess.getoutput('wkhtmltopdf --version')
+st.write("wkhtmltopdf path:", wkhtmltopdf_path)
+st.write("wkhtmltopdf version:", wkhtmltopdf_version)
 
 
 # Title and Description
