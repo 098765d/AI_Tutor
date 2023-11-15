@@ -39,8 +39,14 @@ if api_key:
     choice = st.sidebar.radio("Select download format:", ["PDF", "HTML"])
 
     if st.sidebar.button('Generate Chat History'):
+        # Set path to wkhtmltopdf
+        path_wkhtmltopdf = '/usr/bin/wkhtmltopdf'
+        config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+        
+        # Use the config when converting
+        pdf = pdfkit.from_string(html_data, False, configuration=config)
         html_data = generate_html(st.session_state.messages)
-        pdf = pdfkit.from_string(html_data, False)
+        
         
         pdf_file = io.BytesIO(pdf)
         
