@@ -1,4 +1,3 @@
-
 # AI-Tutor: LLM and RAG-Enhanced AI Tutoring Across a Spectrum of Academic Courses
 
 **Description:**
