@@ -1,31 +1,26 @@
-# EduMentor: An AI-Enhanced Tutoring System
+
+# EduMentor: AI-Driven Tutoring with Advanced Technology and Data Privacy
 
 **Description:**
-EduMentor utilizes advanced RAG (Retrieval-Augmented Generation) to provide comprehensive answers to complex educational queries. This AI-driven approach combines extensive knowledge retrieval with dynamic response generation, enhancing students' understanding and promoting interactive learning.
+EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to deliver a cutting-edge educational platform. The integration of these technologies facilitates a dynamic and responsive learning experience, tailored to individual educational needs.
 
-**Usage:**
-1. Enter your OpenAI API Key.
-2. Upload relevant files.
-3. Explore the chat history and ask questions.
-4. Download chat history in PDF or HTML format.
+**Mechanism of EduMentor:**
+- **OpenAI Assistant API**: EduMentor leverages this robust API for its core AI functionalities. The API enables the AI to interpret complex code, retrieve relevant information efficiently, and perform specific functions, thereby enriching the learning experience. More about the Assistant API can be found [here](https://platform.openai.com/docs/guides/assistants).
+- **Retrieval-Augmented Generation (RAG)**: This framework enhances the AI's responses by grounding them in external, up-to-date sources. It combines retrieval models with generative models, ensuring contextually accurate and information-rich responses. Learn more about RAG [here](https://www.datastax.com/blog/2020/10/introducing-retrieval-augmented-generation-rag).
+- **Vector Database Similarity Search**: EduMentor utilizes vector similarity search for efficient information retrieval from large databases. This technique transforms data into numerical vectors, enabling fast and accurate content retrieval relevant to the user's queries. More information on vector similarity search is available [here](https://www.infoworld.com/article/3634357/what-is-vector-search-better-search-through-ai.html).
 
-**Project Structure:**
-- `api_handler.py`: Handles API interactions.
-- `app.py`: Streamlit app for EduMentor.
-- `chat_gen.py`: Generates chat history.
-- `file_upload.py`: Manages file uploads.
-- `pdfs/`: Directory for uploaded PDF files.
-- `requirements.txt`: List of dependencies.
+**Data Privacy and Safety:**
+EduMentor prioritizes user data privacy and safety, aligning with OpenAI's stringent privacy practices. User control over data sharing, especially with third-party APIs, is a key aspect of our platform. OpenAI's dedication to protecting user data and product security underpins EduMentor's commitment to data safety. More details on OpenAI's privacy and security practices can be found [here](https://openai.com/security).
 
-**Dependencies:**
-- streamlit
-- openai
-- fpdf2
-- jinja2
-- markdown2
-- pdfkit
-- wkhtmltopdf (for PDF conversion)
+**Benefits:**
+- **Enhanced Learning Experience**: EduMentor's use of advanced AI technologies offers a personalized, interactive educational journey.
+- **Data Privacy Assurance**: Our strong commitment to data privacy and safety builds a trustworthy learning environment.
+- **Up-to-Date and Accurate Information**: With RAG and vector database similarity search, EduMentor ensures access to current and relevant information.
 
-To run the app, provide your OpenAI API Key, upload files, and interact with EduMentor. You can download chat history in your preferred format (PDF or HTML) via the sidebar.
+**Usage Guide:**
+1. **API Integration**: Start by entering your OpenAI API Key.
+2. **Resource Management**: Upload educational materials for a customized experience.
+3. **Interactive Learning**: Engage with the AI assistant for tailored educational support.
+4. **Export Learning History**: Download your interactions in PDF or HTML format.
 
-Enjoy using EduMentor for enriched educational experiences!
+**Elevate Your Educational Journey with EduMentor**: Experience the future of learning with a commitment to innovation, privacy, and security.
