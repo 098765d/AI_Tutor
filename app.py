@@ -7,6 +7,11 @@ from api_handler import send_query_get_response
 from chat_gen import generate_html
 import io
 from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
+import subprocess
+
+path_wkhtmltopdf = subprocess.getoutput('which wkhtmltopdf')
+st.write("wkhtmltopdf installed at:", path_wkhtmltopdf)
+
 
 # Title and Description
 st.title('EduMentor : An AI-Enhanced Tutoring System')
