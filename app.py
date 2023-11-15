@@ -40,31 +40,8 @@ if api_key:
     # Sidebar for Additional Features
     st.sidebar.header('EduMentor')
 
-    choice = st.sidebar.radio("Select download format:", ["PDF", "HTML"])
-
     if st.sidebar.button('Generate Chat History'):
-        # Set path to wkhtmltopdf
-        # Path to wkhtmltopdf binary
-        wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
-        if not os.path.isfile(wkhtmltopdf_path):
-            raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
-        # Configure pdfkit to use the binary
-        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-        
-        # Use the config when converting
-        pdf = pdfkit.from_string(html_data, False, configuration=config)
-        html_data = generate_html(st.session_state.messages)
-        
-        
-        pdf_file = io.BytesIO(pdf)
-        
-        if choice == "PDF":
-            st.sidebar.download_button(label="Download Chat History as PDF",
-                                        data=pdf_file,
-                                        file_name="chat_history.pdf",
-                                        mime="application/octet-stream")
-        else:
-            st.sidebar.download_button(label="Download Chat History as HTML",
+        st.sidebar.download_button(label="Download Chat History as HTML",
                                         data=html_data,
                                         file_name="chat_history.html",
                                         mime="text/html")
