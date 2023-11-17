@@ -9,8 +9,9 @@ import io
 from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
 import subprocess
 import os
+from PIL import Image
 
-
+logo=Image.open('logo.png')
 
 # Title and Description
 st.title('EduMentor : An AI-Enhanced Tutoring System')
@@ -38,7 +39,9 @@ if api_key:
     st.divider()
 
     # Sidebar for Additional Features
-    st.sidebar.header('EduMentor')
+    st.sidebar.header('EduMentor: AI-Tutor')
+    st.sidebar.image(logo)
+    st.sidebar.caption('Made by D')
 
     if st.sidebar.button('Generate Chat History'):
         html_data = generate_html(st.session_state.messages)
