@@ -2,6 +2,8 @@
 
 **Web App**: https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/
 
+**Practical Demo** :https://www.youtube.com/watch?v=UH0SjqU5tVI
+
 **Description:**
 EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to deliver a cutting-edge educational platform. Integrating these technologies facilitates a dynamic and responsive learning experience, tailored to individual educational needs.
 
