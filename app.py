@@ -20,9 +20,7 @@ c1, c2 = st.columns([0.2, 3.2])
 
 with c1:
 
-    st.caption("")
-
-    st.image(logo, width=60)
+    st.image(logo)
 
 with c2:
 
