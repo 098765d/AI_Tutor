@@ -15,7 +15,6 @@ EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (R
   - **Keeping Content Current and Relevant**: Educational content needs to be up-to-date. RAG helps in keeping the LLMs relevant and current by supplementing their baseline knowledge, which might have gaps due to the limitations of their training data.
   - **Enhancing Personalized Learning**: By drawing upon a wide range of external data sources, RAG allows EduMentor to offer more personalized and contextually accurate responses, tailored to individual learners' queries and educational contexts.
 
-![RAG](https://python.langchain.com/assets/images/qa_flow-9fbd91de9282eb806bda1c6db501ecec.jpeg)
 
 ![Method](method.png)
 
