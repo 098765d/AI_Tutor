@@ -15,12 +15,15 @@ from chat_gen import generate_html
 from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
 
 logo=Image.open('logo.png')
+sb_logo=Image.open('sb_logo.png')
+
 
 c1, c2 = st.columns([0.25, 3.2])
 
 with c1:
     st.caption('')
     st.caption('')
+     st.caption('')
     st.image(logo,width=50)
 
 with c2:
@@ -51,7 +54,7 @@ if api_key:
 
     # Sidebar for Additional Features
     st.sidebar.header('EduMentor: AI-Tutor')
-    st.sidebar.image(logo)
+    st.sidebar.image(sb_logo)
     st.sidebar.caption('Made by D')
     # Adding a button in the sidebar to delete all files from the assistant
     if st.sidebar.button('Delete All Files from Assistant'):
