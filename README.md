@@ -16,6 +16,8 @@ EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (R
 
 ![RAG](https://python.langchain.com/assets/images/qa_flow-9fbd91de9282eb806bda1c6db501ecec.jpeg)
 
+![Method](method.png)
+
 **Data Privacy and Safety:**
 EduMentor prioritizes user data privacy and safety, aligning with OpenAI's stringent privacy practices. User control over data sharing, especially with third-party APIs, is a key aspect of our platform.
 
