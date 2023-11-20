@@ -16,8 +16,18 @@ from file_upload import upload_files_to_assistant, attach_files_to_assistant, ch
 
 logo=Image.open('logo.png')
 
-# Title and Description
-st.title('EduMentor : An AI-Enhanced Tutoring System')
+c1, c2 = st.columns([0.2, 3.2])
+
+with c1:
+
+    st.caption("")
+
+    st.image(logo, width=60)
+
+with c2:
+
+    st.title('EduMentor : An AI-Enhanced Tutoring System')
+
 
 # RAG Function Description
 st.markdown("## AI Tutor Description")
