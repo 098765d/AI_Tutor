@@ -16,7 +16,7 @@ from file_upload import upload_files_to_assistant, attach_files_to_assistant, ch
 
 logo=Image.open('logo.png')
 
-c1, c2 = st.columns([0.2, 3.2])
+c1, c2 = st.columns([0.25, 3.2])
 
 with c1:
     st.caption('')
