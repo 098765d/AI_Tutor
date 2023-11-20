@@ -23,7 +23,7 @@ c1, c2 = st.columns([0.25, 3.2])
 with c1:
     st.caption('')
     st.caption('')
-     st.caption('')
+    st.caption('')
     st.image(logo,width=50)
 
 with c2:
