@@ -1,4 +1,5 @@
 # AI-Tutor: LLM and RAG-Enhanced AI Tutoring Across a Spectrum of Academic Courses
+![AI_Tutor](sb_logo.png)
 
 **Web App**: https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/
 
