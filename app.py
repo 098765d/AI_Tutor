@@ -44,7 +44,10 @@ if api_key:
     # Adding a button in the sidebar to delete all files from the assistant
     if st.sidebar.button('Delete All Files from Assistant'):
         # Retrieve all file IDs associated with the assistant
-        assistant_files = client.beta.assistants.files.list(assistant_id=assistant_id)
+        assistant_files_response = client.beta.assistants.files.list(assistant_id=assistant_id)
+        assistant_files = assistant_files_response.get('data', [])
+
+        # Delete each file
         for file in assistant_files:
             file_id = file['id']
             client.beta.assistants.files.delete(assistant_id=assistant_id, file_id=file_id)
