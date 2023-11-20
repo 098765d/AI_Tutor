@@ -10,7 +10,6 @@ from file_upload import upload_files_to_assistant, attach_files_to_assistant, ch
 import subprocess
 import os
 from PIL import Image
-
 logo=Image.open('logo.png')
 
 # Title and Description
