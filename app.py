@@ -42,6 +42,14 @@ if api_key:
     st.sidebar.header('EduMentor: AI-Tutor')
     st.sidebar.image(logo)
     st.sidebar.caption('Made by D')
+    # Adding a button in the sidebar to delete all files from the assistant
+    if st.sidebar.button('Delete All Files from Assistant'):
+        # Retrieve all file IDs associated with the assistant
+        assistant_files = client.beta.assistants.files.list(assistant_id=assistant_id)
+        for file in assistant_files:
+            file_id = file['id']
+            client.beta.assistants.files.delete(assistant_id=assistant_id, file_id=file_id)
+            st.sidebar.success(f'Deleted file: {file_id}')
 
     if st.sidebar.button('Generate Chat History'):
         html_data = generate_html(st.session_state.messages)
