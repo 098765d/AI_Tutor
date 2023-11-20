@@ -19,8 +19,8 @@ logo=Image.open('logo.png')
 c1, c2 = st.columns([0.2, 3.2])
 
 with c1:
-
-    st.image(logo)
+    st.caption('')
+    st.image(logo,width=50)
 
 with c2:
 
