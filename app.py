@@ -81,7 +81,8 @@ if api_key:
 
         with st.chat_message("assistant", avatar='👨🏻‍🏫'):
             message_placeholder = st.empty()
-            response = send_query_get_response(client,prompt,assistant_id)
+            with st.spinner('Thinking...'):
+                response = send_query_get_response(client,prompt,assistant_id)
             message_placeholder.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
 
