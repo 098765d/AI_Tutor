@@ -49,6 +49,7 @@ if api_key:
 
         # Delete each file
         for file in assistant_files:
+            st.sidebar.write(file)
             file_id = file['id']
             client.beta.assistants.files.delete(assistant_id=assistant_id, file_id=file_id)
             st.sidebar.success(f'Deleted file: {file_id}')
