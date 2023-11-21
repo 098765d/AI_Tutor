@@ -1,42 +1,69 @@
-# AI-Tutor: LLM and RAG-Enhanced AI Tutoring Across a Spectrum of Academic Courses
-<div align="center"><img src="sb_logo.png" alt="AI_Tutor" width="200"/></div>
+# AI-Tutor: Customized AI Tutoring for Diverse Academic Courses
 
+<div align="center">
+    <img src="sb_logo.png" alt="AI_Tutor" width="200"/>
+</div>
 
-**Web App**: https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/ 
+## Overview
+AI-Tutor, an educational web app, integrates the latest OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to offer personalized tutoring across various academic courses. It adapts to specific course materials, ensuring a dynamic, responsive, and tailored learning experience.
 
-**Practical Demo** :https://www.youtube.com/watch?v=UH0SjqU5tVI
+## Core Features
+- **Versatile Application**: Adaptable to any course with the requirement of uploading course-specific materials.
+- **Intelligent Tutoring**: Tailored responses that align with course content, overcoming information hallucination.
+- **User Interface**: Streamlit-based, intuitive UI hosted on the Free Streamlit Community Cloud.
+- **Data Privacy and Security**: Adherence to OpenAI's stringent privacy practices.
 
-**Description:**
-EduMentor harnesses OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to deliver a cutting-edge educational platform. Integrating these technologies facilitates a dynamic and responsive learning experience, tailored to individual educational needs.
+## Technical Composition
+- **Core Technologies**: Utilizes LLM and RAG from OpenAI's Assistants API for core AI functionalities.
+- **Programming Language**: Primarily Python.
+- **Hosting Server**: Free Streamlit Community Cloud.
 
-**Mechanism of EduMentor:**
-- **OpenAI Assistant API**: EduMentor leverages this robust API for its core AI functionalities. The API enables the AI to interpret complex code, retrieve relevant information efficiently, and perform specific functions, enriching the learning experience (https://platform.openai.com/docs/assistants/overview).
-- **Retrieval-Augmented Generation (RAG)**: RAG is a critical component of EduMentor, providing LLMs with additional information from external knowledge sources. This approach enhances the efficacy of LLMs by leveraging relevant data and documents, thereby providing context for the AI's responses. RAG is particularly beneficial in educational settings for several reasons:
-  - **Mitigating Hallucinations**: One of the challenges with LLMs is their tendency to "hallucinate" or generate factually incorrect information. RAG addresses this issue by grounding the AI's responses in verified external data, reducing the likelihood of inaccuracies and enhancing the trustworthiness of the information provided.
-  - **Keeping Content Current and Relevant**: Educational content needs to be up-to-date. RAG helps in keeping the LLMs relevant and current by supplementing their baseline knowledge, which might have gaps due to the limitations of their training data.
-  - **Enhancing Personalized Learning**: By drawing upon a wide range of external data sources, RAG allows EduMentor to offer more personalized and contextually accurate responses, tailored to individual learners' queries and educational contexts.
+## Methodology
+AI-Tutor employs a combination of advanced AI technologies to enhance the learning experience:
 
+- **LLM API**: This forms the backbone of AI-Tutor's intelligence. It enables the platform to understand complex queries, retrieve information efficiently, and provide accurate, context-aware responses.
+
+- **Retrieval-Augmented Generation (RAG)**: RAG is a key component that supplements the AI's knowledge base. By accessing external data sources, RAG ensures that the AI's responses are not only relevant but also grounded in verified information. This feature is crucial for maintaining the accuracy and reliability of the educational content provided by AI-Tutor.
+
+  - *Mitigating Information Hallucination*: RAG effectively addresses the challenge of AI-generated misinformation by validating responses against trusted external sources.
+  - *Personalized Learning Experience*: The use of diverse data sources enables AI-Tutor to tailor its responses to specific educational contexts and individual learner needs.
 
 ![Method](method.png)
 
-**Data Privacy and Safety:**
-EduMentor prioritizes user data privacy and safety, aligning with OpenAI's stringent privacy practices. User control over data sharing, especially with third-party APIs, is a key aspect of our platform.
 
-**Benefits:**
-- **Enhanced Learning Experience**: By integrating RAG with AI technologies, EduMentor offers a personalized, interactive educational journey.
-- **Data Privacy Assurance**: Our strong commitment to data privacy and safety builds a trustworthy learning environment.
-- **Accurate and Current Information**: RAG ensures access to current and relevant information, critical for educational applications.
-- **Versatile Course Coverage**: EduMentor can be applied across any course, thanks to its reliance on course materials uploaded to the vector database. This adaptability makes it a universally applicable tool for various educational fields and disciplines.
-- **Real-Time and Interactive Tutoring**: EduMentor provides real-time feedback and interactive lessons, enhancing the learning process. This feature contributes to a more dynamic and responsive educational experience.
 
-**Usage Guide:**
-1. Enter your OpenAI API Key.
-2. Upload educational materials.
-3. Engage with the AI assistant.
-4. Download your interactions in HTML format.
 
-**References:**
-1. "OpenAI Assistant API." OpenAI. [OpenAI Assistant API Documentation](https://platform.openai.com/docs/guides/assistants).
-2. "Retrieval-Augmented Generation." DataStax. [Introduction to RAG](https://www.datastax.com/blog/2020/10/introducing-retrieval-augmented-generation-rag).
-3. "Vector Database Similarity Search." InfoWorld. [Understanding Vector Search](https://www.infoworld.com/article/3634357/what-is-vector-search-better-search-through-ai.html).
-4. "OpenAI Privacy and Security Practices." OpenAI. [OpenAI Security](https://openai.com/security).
+## Web App Components
+<div align="center">
+    <img src="web_app_view.png" alt="AI_Tutor" width="700"/>
+</div>
+
+- **Sidebar**: 
+  - Option to delete all uploaded materials.
+  - Generate and download Q&A records in HTML format.
+- **Main Page**: 
+  - API Key input.
+  - Upload feature for course materials.
+  - Interactive Q&A section.
+  - Display and archive of Q&A records.
+  - Feature to pose new questions.
+
+## Getting Started
+1. Access [AI-Tutor Streamlit App](https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/).
+2. Enter your OpenAI API Key.
+3. Upload course materials for a custom tutoring session.
+4. Interact with the AI assistant for course-specific queries.
+5. Download the Q&A session transcript in HTML format.
+
+## Benefits
+- **Enhanced Learning Experience**: Integrates RAG with AI technologies for a personalized educational journey.
+- **Data Privacy Assurance**: Strong commitment to user data protection.
+- **Current and Relevant Responses**: Ensures up-to-date and accurate information.
+- **Broad Course Coverage**: Applicable across various educational fields and disciplines.
+- **Interactive Tutoring**: Real-time feedback and dynamic learning sessions.
+
+## References
+- [OpenAI Assistant API Documentation](https://platform.openai.com/docs/guides/assistants)
+- [Introduction to Retrieval-Augmented Generation (RAG)](https://www.datastax.com/blog/2020/10/introducing-retrieval-augmented-generation-rag)
+- [Vector Database Similarity Search](https://www.infoworld.com/article/3634357/what-is-vector-search-better-search-through-ai.html)
+- [OpenAI Privacy and Security Practices](https://openai.com/security)
