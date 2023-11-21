@@ -24,7 +24,7 @@ with c1:
     st.caption('')
     st.caption('')
     st.caption('')
-    st.image(logo,width=70)
+    st.image(logo,width=100)
 
 with c2:
 
