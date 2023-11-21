@@ -18,13 +18,13 @@ logo=Image.open('logo.png')
 sb_logo=Image.open('sb_logo.png')
 
 
-c1, c2 = st.columns([0.3, 3.2])
+c1, c2 = st.columns([0.5, 3.2])
 
 with c1:
     st.caption('')
     st.caption('')
     st.caption('')
-    st.image(logo,width=60)
+    st.image(logo,width=70)
 
 with c2:
 
