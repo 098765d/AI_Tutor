@@ -19,6 +19,7 @@ sb_logo=Image.open('sb_logo.png')
 
 
 c1, c2 = st.columns([0.7, 3.2])
+sc1,sc2,sc3=st.sidebar.columns(3)
 
 with c1:
     st.caption('')
@@ -52,9 +53,10 @@ if api_key:
     st.divider()
 
     # Sidebar for Additional Features
-    st.sidebar.header('EduMentor: AI-Tutor')
-    st.sidebar.image(logo,width=170)
-    st.sidebar.caption('Made by D')
+    with sc2:
+        st.sidebar.header('EduMentor: AI-Tutor')
+        st.sidebar.image(logo,width=120)
+        st.sidebar.caption('Made by D')
     # Adding a button in the sidebar to delete all files from the assistant
     if st.sidebar.button('Delete All Files from Assistant'):
         # Retrieve all file IDs associated with the assistant
