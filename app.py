@@ -18,7 +18,7 @@ logo=Image.open('logo.png')
 sb_logo=Image.open('sb_logo.png')
 
 
-c1, c2 = st.columns([0.5, 3.2])
+c1, c2 = st.columns([0.7, 3.2])
 
 with c1:
     st.caption('')
