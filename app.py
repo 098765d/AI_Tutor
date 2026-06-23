@@ -1,102 +1,165 @@
-# Built-in modules
-import io
-import os
-import subprocess
+from __future__ import annotations
 
-# Third-party modules
+from pathlib import Path
+
 import streamlit as st
 from PIL import Image
-from openai import OpenAI
 
-# Local modules
-import api_handler
-from api_handler import send_query_get_response
-from chat_gen import generate_html
-from file_upload import upload_files_to_assistant, attach_files_to_assistant, check_and_upload_files
+from src.config import load_config
+from src.export import generate_html
+from src.tutor import KGRAGTutor
 
-logo=Image.open('logo.png')
-sb_logo=Image.open('sb_logo.png')
+ROOT = Path(__file__).resolve().parent
 
 
-c1, c2 = st.columns([0.9, 3.2])
+def get_tutor(deepseek_key: str, dashscope_key: str) -> KGRAGTutor:
+    overrides: dict = {}
+    if deepseek_key:
+        overrides.setdefault("llm", {})["api_key"] = deepseek_key
+    if dashscope_key:
+        overrides.setdefault("embeddings", {})["api_key"] = dashscope_key
 
-with c1:
-    st.caption('')
-    st.caption('')
-    st.image(logo,width=120)
+    if "tutor" in st.session_state and not overrides:
+        return st.session_state["tutor"]
 
-with c2:
+    config = load_config(overrides=overrides or None)
+    if not config.llm.api_key:
+        raise ValueError(
+            "DeepSeek API key is required. Add llm.api_key to config.yaml or enter it in the sidebar."
+        )
+    if config.embeddings.provider == "dashscope" and not config.embeddings.api_key:
+        merged = {**(overrides or {}), "embeddings": {"provider": "local"}}
+        config = load_config(overrides=merged)
 
-    st.title('EduMentor : An AI-Enhanced Tutoring System')
-
-
-# RAG Function Description
-st.markdown("## AI Tutor Description")
-rag_description = """
-EduMentor leverages the cutting-edge RAG (Retrieval-Augmented Generation) function to provide in-depth, contextually rich answers to complex educational queries. This AI-driven approach combines extensive knowledge retrieval with dynamic response generation, offering students a deeper, more nuanced understanding of subjects and fostering a more interactive, exploratory learning environment.
-"""
-st.markdown(rag_description)
-
-# OpenAI API Key Input
-api_key = st.text_input(label='Enter your OpenAI API Key', type='password')
-
-if api_key:
-    # If API key is entered, initialize the OpenAI client and proceed with app functionality
-    client = OpenAI(api_key=api_key)
-    assistant_id = 'asst_konaahsahZ0UhK82guGBvn6m'
-
-    # File Handling Section
-    files_info = check_and_upload_files(client, assistant_id)
-    
-    st.markdown(f'Number of files uploaded in the assistant: :blue[{len(files_info)}]')
-    st.divider()
-
-    # Sidebar for Additional Features
-    st.sidebar.header('EduMentor: AI-Tutor')
-    st.sidebar.image(logo,width=120)
-    st.sidebar.caption('Made by D')
-    # Adding a button in the sidebar to delete all files from the assistant
-    if st.sidebar.button('Delete All Files from Assistant'):
-        # Retrieve all file IDs associated with the assistant
-        assistant_files_response = client.beta.assistants.files.list(assistant_id=assistant_id)
-        assistant_files = assistant_files_response.data
-
-        # Delete each file
-        for file in assistant_files:
-            file_id = file.id
-            client.beta.assistants.files.delete(assistant_id=assistant_id, file_id=file_id)
-            st.sidebar.success(f'Deleted file: {file_id}')
-
-    if st.sidebar.button('Generate Chat History'):
-        html_data = generate_html(st.session_state.messages)
-        st.sidebar.download_button(label="Download Chat History as HTML",
-                                        data=html_data,
-                                        file_name="chat_history.html",
-                                        mime="text/html")
+    tutor = KGRAGTutor(config)
+    tutor.load_indexes()
+    return tutor
 
 
-    # Main Chat Interface
-    st.subheader('Q&A record with AI-Tutor 📜')
-    st.caption('You can choose to download the chat history in either PDF or HTML format using the options in the sidebar on the left.')
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+st.set_page_config(
+    page_title="KG-RAG AI Tutor",
+    page_icon="🎓",
+    layout="wide",
+)
 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"], unsafe_allow_html=True)
-
-    if prompt := st.chat_input("Welcome and ask a question to the AI tutor"):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant", avatar='👨🏻‍🏫'):
-            message_placeholder = st.empty()
-            with st.spinner('Thinking...'):
-                response = send_query_get_response(client,prompt,assistant_id)
-            message_placeholder.markdown(response)
-            st.session_state.messages.append({"role": "assistant", "content": response})
-
+logo_path = ROOT / "logo.png"
+if logo_path.exists():
+    logo = Image.open(logo_path)
 else:
-    # Prompt for API key if not entered
-    st.warning("Please enter your OpenAI API Key to use EduMentor.")
+    logo = None
+
+header_left, header_right = st.columns([1, 4])
+with header_left:
+    if logo:
+        st.image(logo, width=110)
+with header_right:
+    st.title("KG-RAG AI Tutor")
+    st.caption(
+        "Knowledge Graph-enhanced Retrieval-Augmented Generation for adaptive course tutoring "
+        "(Dong et al., ICEIT 2025)."
+    )
+
+st.markdown(
+    """
+This implementation follows the KG-RAG architecture:
+
+1. **RAG** retrieves similar course chunks via embeddings.
+2. **Knowledge-Guided Retrieval (KGR)** expands context by traversing a course knowledge graph.
+3. **DeepSeek-V3** synthesizes a grounded tutoring response from both contexts.
+
+Set API keys in `config.yaml`, or enter them below to override blank values.
+"""
+)
+
+with st.sidebar:
+    st.header("Settings")
+    if logo:
+        st.image(logo, width=100)
+
+    mode = st.radio(
+        "Answering mode",
+        options=["kg_rag", "rag"],
+        format_func=lambda value: "KG-RAG (recommended)" if value == "kg_rag" else "Standard RAG",
+        index=0,
+    )
+
+    deepseek_key = st.text_input("DeepSeek API key", type="password")
+    dashscope_key = st.text_input("DashScope API key (embeddings)", type="password")
+
+    st.divider()
+    st.subheader("Course index")
+    rebuild_kg = st.checkbox("Rebuild knowledge graph", value=True)
+    kg_chunk_limit = st.slider("KG extraction chunks (API cost control)", 4, 40, 12)
+
+    if st.button("Build / Rebuild Course Index", type="primary"):
+        try:
+            tutor = get_tutor(deepseek_key, dashscope_key)
+            with st.spinner("Indexing PDFs, building vector store and knowledge graph..."):
+                stats = tutor.build_indexes(rebuild_kg=rebuild_kg, kg_chunk_limit=kg_chunk_limit)
+            st.success(
+                f"Indexed {stats['pdf_count']} PDFs · {stats['chunk_count']} chunks · "
+                f"{stats['triple_count']} triples · {stats['graph_edges']} graph edges"
+            )
+            st.session_state["tutor"] = tutor
+        except Exception as exc:
+            st.error(str(exc))
+
+    if st.button("Download chat history (HTML)"):
+        messages = st.session_state.get("messages", [])
+        if not messages:
+            st.warning("No chat history yet.")
+        else:
+            html_data = generate_html(messages)
+            st.download_button(
+                label="Save chat_history.html",
+                data=html_data,
+                file_name="chat_history.html",
+                mime="text/html",
+            )
+
+    st.divider()
+    st.caption("Paper: How to build an adaptive AI tutor using KG-RAG (ICEIT 2025)")
+
+
+uploaded_pdfs = st.file_uploader("Upload additional course PDFs", type=["pdf"], accept_multiple_files=True)
+if uploaded_pdfs and st.button("Save uploaded PDFs"):
+    upload_dir = ROOT / "data" / "uploads"
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    for uploaded in uploaded_pdfs:
+        target = upload_dir / uploaded.name
+        target.write_bytes(uploaded.getbuffer())
+    st.success(f"Saved {len(uploaded_pdfs)} file(s) to data/uploads/. Rebuild the index to include them.")
+
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"], avatar="🧑‍🎓" if message["role"] == "user" else "👨🏻‍🏫"):
+        st.markdown(message["content"])
+
+if prompt := st.chat_input("Ask the AI tutor a course question..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user", avatar="🧑‍🎓"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant", avatar="👨🏻‍🏫"):
+        placeholder = st.empty()
+        try:
+            tutor = get_tutor(deepseek_key, dashscope_key)
+            if not tutor.is_indexed:
+                tutor.load_indexes()
+            with st.spinner("Retrieving context and generating answer..."):
+                result = tutor.answer(prompt, mode=mode)
+            suffix = ""
+            if result.reused_history:
+                suffix = "\n\n*Answer reused from chat history (cosine similarity ≥ threshold).*"
+            elif mode == "kg_rag":
+                suffix = "\n\n*Generated with KG-RAG (similarity retrieval + knowledge-graph expansion).*"
+            else:
+                suffix = "\n\n*Generated with standard RAG.*"
+            placeholder.markdown(result.answer + suffix)
+            st.session_state.messages.append({"role": "assistant", "content": result.answer + suffix})
+            st.session_state["tutor"] = tutor
+        except Exception as exc:
+            placeholder.error(str(exc))

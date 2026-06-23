@@ -1,0 +1,27 @@
+# Example configuration — copy to config.yaml and add your keys.
+
+llm:
+  provider: deepseek
+  api_key: "your-deepseek-api-key"
+  base_url: "https://api.deepseek.com"
+  model: "deepseek-chat"
+
+embeddings:
+  provider: dashscope
+  api_key: "your-dashscope-api-key"
+  model: "text-embedding-v2"
+  local_model: "sentence-transformers/all-MiniLM-L6-v2"
+
+kg_rag:
+  chunk_size: 1000
+  chunk_overlap: 200
+  rag_top_k: 5
+  kg_top_k: 5
+  kg_hop_depth: 2
+  default_mode: kg_rag
+  chat_history_threshold: 0.85
+
+paths:
+  pdf_dir: pdf
+  data_dir: data
+  uploads_dir: data/uploads

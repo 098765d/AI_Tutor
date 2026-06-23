@@ -1,69 +1,98 @@
-# AI-Tutor: Customized AI Tutoring for Diverse Academic Courses
+# KG-RAG AI Tutor
 
-<div align="center">
-    <img src="sb_logo.png" alt="AI_Tutor" width="200"/>
-</div>
+Adaptive AI tutoring system based on **Knowledge Graph-enhanced Retrieval-Augmented Generation (KG-RAG)**.
 
-## Overview
-AI-Tutor, an educational web app, integrates the latest OpenAI's Assistant API and Retrieval-Augmented Generation (RAG) to offer personalized tutoring across various academic courses. It adapts to specific course materials, ensuring a dynamic, responsive, and tailored learning experience.
+Paper: *How to build an adaptive AI tutor for any course using KG-RAG* (Dong et al., ICEIT 2025, IEEE).
 
-## Core Features
-- **Versatile Application**: Adaptable to any course with the requirement of uploading course-specific materials.
-- **Intelligent Tutoring**: Tailored responses that align with course content, overcoming information hallucination.
-- **User Interface**: Streamlit-based, intuitive UI hosted on the Free Streamlit Community Cloud.
-- **Data Privacy and Security**: Adherence to OpenAI's stringent privacy practices.
+## Architecture
 
-## Technical Composition
-- **Core Technologies**: Utilizes LLM and RAG from OpenAI's Assistants API for core AI functionalities.
-- **Programming Language**: Primarily Python.
-- **Hosting Server**: Free Streamlit Community Cloud.
+```
+Student query
+    │
+    ├─► Chat history reuse (MiniLM / embedding similarity ≥ 0.85)
+    │
+    ├─► RAG: vector similarity over course chunks
+    │
+    └─► KGR: knowledge-graph traversal for expanded context
+              │
+              ▼
+        DeepSeek-V3 response synthesis
+```
 
-## Methodology
-AI-Tutor employs a combination of advanced AI technologies to enhance the learning experience:
+### Pipeline (paper Section III)
 
-- **LLM API**: This forms the backbone of AI-Tutor's intelligence. It enables the platform to understand complex queries, retrieve information efficiently, and provide accurate, context-aware responses.
+1. **KG construction** — chunk course PDFs (~1,000 tokens), extract `[Entity, Relation, Entity]` triples with DeepSeek-V3, save to `data/knowledge_graph.xlsx`.
+2. **Knowledge-Guided Retrieval** — embed the query, match KG nodes, traverse neighbors for interconnected context.
+3. **Response synthesis** — combine similarity context + KG-expanded context and generate the tutoring answer.
 
-- **Retrieval-Augmented Generation (RAG)**: RAG is a key component that supplements the AI's knowledge base. By accessing external data sources, RAG ensures that the AI's responses are not only relevant but also grounded in verified information. This feature is crucial for maintaining the accuracy and reliability of the educational content provided by AI-Tutor.
+## Quick start
 
-  - *Mitigating Information Hallucination*: RAG effectively addresses the challenge of AI-generated misinformation by validating responses against trusted external sources.
-  - *Personalized Learning Experience*: The use of diverse data sources enables AI-Tutor to tailor its responses to specific educational contexts and individual learner needs.
+```bash
+git clone https://github.com/098765d/AI_Tutor.git
+cd AI_Tutor
+pip install -r requirements.txt
+cp config.example.yaml config.yaml
+```
 
-![Method](method.png)
+Edit `config.yaml` and add your keys:
 
+```yaml
+llm:
+  api_key: ""          # DeepSeek API key
 
+embeddings:
+  api_key: ""          # DashScope API key (optional — falls back to local MiniLM)
+```
 
+Run the app:
 
-## Web App Components
-<div align="center">
-    <img src="web_app_view.png" alt="AI_Tutor" width="700"/>
-</div>
+```bash
+streamlit run app.py
+```
 
-- **Sidebar**: 
-  - Option to delete all uploaded materials.
-  - Generate and download Q&A records in HTML format.
-- **Main Page**: 
-  - API Key input.
-  - Upload feature for course materials.
-  - Interactive Q&A section.
-  - Display and archive of Q&A records.
-  - Feature to pose new questions.
+1. Open the sidebar and click **Build / Rebuild Course Index** (uses PDFs in `pdf/`).
+2. Ask questions in the chat box.
+3. Switch between **KG-RAG** and **Standard RAG** to compare modes.
 
-## Getting Started
-1. Access [AI-Tutor Streamlit App](https://aitutor-gawywv3h6qfwzzvikfzkpl.streamlit.app/).
-2. Enter your OpenAI API Key.
-3. Upload course materials for a custom tutoring session.
-4. Interact with the AI assistant for course-specific queries.
-5. Download the Q&A session transcript in HTML format.
+## Configuration
 
-## Benefits
-- **Enhanced Learning Experience**: Integrates RAG with AI technologies for a personalized educational journey.
-- **Data Privacy Assurance**: Strong commitment to user data protection.
-- **Current and Relevant Responses**: Ensures up-to-date and accurate information.
-- **Broad Course Coverage**: Applicable across various educational fields and disciplines.
-- **Interactive Tutoring**: Real-time feedback and dynamic learning sessions.
+| Key | Purpose |
+|-----|---------|
+| `llm.api_key` | DeepSeek-V3 chat completions |
+| `embeddings.api_key` | Alibaba `text-embedding-v2` (paper default) |
+| `kg_rag.chunk_size` | PDF chunk size in words |
+| `kg_rag.kg_hop_depth` | Graph traversal depth for KGR |
+| `kg_rag.chat_history_threshold` | Reuse threshold (default 0.85) |
+
+If DashScope key is empty, embeddings automatically fall back to `sentence-transformers/all-MiniLM-L6-v2`.
+
+## Project layout
+
+```
+AI_Tutor/
+├── app.py                 # Streamlit UI
+├── config.yaml            # API keys (gitignored — copy from config.example.yaml)
+├── config.example.yaml
+├── pdf/                   # Bundled course materials
+├── src/
+│   ├── tutor.py           # KG-RAG orchestration
+│   ├── knowledge_graph.py # KG build + KGR
+│   ├── vector_store.py    # RAG retrieval
+│   ├── llm.py             # DeepSeek client
+│   ├── embeddings.py      # DashScope / local embeddings
+│   ├── documents.py       # PDF loading & chunking
+│   ├── chat_history.py    # History reuse (Fig. 6 in paper)
+│   └── export.py          # HTML chat export
+└── data/                  # Generated index files (gitignored)
+```
 
 ## References
-- [OpenAI Assistant API Documentation](https://platform.openai.com/docs/guides/assistants)
-- [Introduction to Retrieval-Augmented Generation (RAG)](https://www.datastax.com/blog/2020/10/introducing-retrieval-augmented-generation-rag)
-- [Vector Database Similarity Search](https://www.infoworld.com/article/3634357/what-is-vector-search-better-search-through-ai.html)
-- [OpenAI Privacy and Security Practices](https://openai.com/security)
+
+- [ICEIT 2025 paper (IEEE Xplore)](https://doi.org/10.1109/ICEIT64364.2025.10975937)
+- [Assessment quiz used in the study](https://github.com/098765d/KG-RAG/blob/main/MC_quiz.pdf)
+- [DeepSeek API](https://platform.deepseek.com/)
+- [DashScope embeddings](https://help.aliyun.com/zh/model-studio/developer-reference/text-embedding-synchronous-api)
+
+## License
+
+See [LICENSE](LICENSE).
